@@ -4,7 +4,8 @@ import { useParams } from 'react-router-dom';
 
 function Movie() {
   console.log("!")
-  const [movieInfo, setMovieInfo] = useState()
+  const [movieInfo, setMovieInfo] = useState();
+  const [loading, setLoading] = useState(true);
   let { id } = useParams();
   // useEffect to fetch rest of movie data
   // and fetch stored upvote/downvotes
@@ -22,16 +23,29 @@ function Movie() {
       };
     
     let results = await axios.request(options);
-    console.log(results);
-    setMovieInfo(results);
+    console.log(results.data);
+    setMovieInfo(results.data);
+    console.log(results.data);
+    setLoading(false);
     }
     getMovieInfo();
-  }, []);
+    
+  }, [id]);
+
+  if (loading){
+    return (
+      <div>
+        Loading...
+        </div>
+    )
+  }
 
   return (
     <div>
-      Hi! {id}
-    </div>
+      {movieInfo.title} -
+      {movieInfo.year} -
+      {movieInfo.length} -
+         </div>
   )
 };
 
