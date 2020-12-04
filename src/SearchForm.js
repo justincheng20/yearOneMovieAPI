@@ -4,7 +4,7 @@ function SearchForm({searchMovies}) {
   const [formData, setFormData] = useState({
     title: "",
   });
-  const [message, setMessage] = useState(null);
+  // const [message, setMessage] = useState(null);
 
   const handleChange = evt => {
     const { name, value } = evt.target;

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import BackendApi from './api';
 
 function Movie() {
   console.log("!")
@@ -8,6 +9,7 @@ function Movie() {
   const [score, setScore] = useState(0);
   const [loading, setLoading] = useState(true);
   let { id } = useParams();
+  console.log(typeof id)
   // useEffect to fetch rest of movie data
   // and fetch stored upvote/downvotes
   // make new entry if it does not exist!
@@ -25,18 +27,28 @@ function Movie() {
 
       let results = await axios.request(options);
       setMovieInfo(results.data);
-
+      let movieScore = await BackendApi.getMovieScore(id);
+      
+      if (movieScore.status === undefined){
+        let newMovie = await BackendApi.addMovie(id);
+        console.log(newMovie);
+        movieScore = newMovie.data;
+      };
+      console.log(movieScore)
+      setScore(movieScore.data.votes);
       setLoading(false);
     }
     getMovieInfo();
 
   }, [id]);
 
-  const upVote = (id) => {
+  const upVote = async (id) => {
+    await BackendApi.updateMovieScore(id, "up");
     setScore(score + 1);
   }
 
-  const downVote = (id) => {
+  const downVote = async (id) => {
+    await BackendApi.updateMovieScore(id, "down");
     setScore(score - 1);
   }
 
@@ -54,8 +66,8 @@ function Movie() {
       {movieInfo.year} -
       {movieInfo.length} -
       {score}
-      <button onClick={upVote}>↑</button>
-      <button onClick={downVote}>↓</button>
+      <button onClick={() => upVote(id)}>↑</button>
+      <button onClick={() => downVote(id)}>↓</button>
     </div>
   )
 };
