@@ -10,18 +10,22 @@ function Movie() {
   // and fetch stored upvote/downvotes
   // make new entry if it does not exist!
 
-  useEffect(function (movieId) {
-    let options = {
-      method: 'GET',
-      url: `https://imdb-internet-movie-database-unofficial.p.rapidapi.com/film/${movieId}`,
-      headers: {
-        'x-rapidapi-key': 'd122deae09mshd1e30a7aa0d5fcep1a6acfjsnbc4ae67cf9ff',
-        'x-rapidapi-host': 'imdb-internet-movie-database-unofficial.p.rapidapi.com'
-      }
-    };
+  useEffect(function () {
+    const getMovieInfo = async () => {
+      let options = {
+        method: 'GET',
+        url: `https://imdb-internet-movie-database-unofficial.p.rapidapi.com/film/${id}`,
+        headers: {
+          'x-rapidapi-key': 'd122deae09mshd1e30a7aa0d5fcep1a6acfjsnbc4ae67cf9ff',
+          'x-rapidapi-host': 'imdb-internet-movie-database-unofficial.p.rapidapi.com'
+        }
+      };
+    
     let results = await axios.request(options);
     console.log(results);
     setMovieInfo(results);
+    }
+    getMovieInfo();
   }, []);
 
   return (
