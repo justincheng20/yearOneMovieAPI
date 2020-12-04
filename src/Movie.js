@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 function Movie() {
   console.log("!")
   const [movieInfo, setMovieInfo] = useState();
+  const [score, setScore] = useState(0);
   const [loading, setLoading] = useState(true);
   let { id } = useParams();
   // useEffect to fetch rest of movie data
@@ -21,22 +22,29 @@ function Movie() {
           'x-rapidapi-host': 'imdb-internet-movie-database-unofficial.p.rapidapi.com'
         }
       };
-    
-    let results = await axios.request(options);
-    console.log(results.data);
-    setMovieInfo(results.data);
-    console.log(results.data);
-    setLoading(false);
+
+      let results = await axios.request(options);
+      setMovieInfo(results.data);
+
+      setLoading(false);
     }
     getMovieInfo();
-    
+
   }, [id]);
 
-  if (loading){
+  const upVote = (id) => {
+    setScore(score + 1);
+  }
+
+  const downVote = (id) => {
+    setScore(score - 1);
+  }
+
+  if (loading) {
     return (
       <div>
         Loading...
-        </div>
+      </div>
     )
   }
 
@@ -45,7 +53,10 @@ function Movie() {
       {movieInfo.title} -
       {movieInfo.year} -
       {movieInfo.length} -
-         </div>
+      {score}
+      <button onClick={upVote}>↑</button>
+      <button onClick={downVote}>↓</button>
+    </div>
   )
 };
 
