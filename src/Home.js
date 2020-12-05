@@ -5,6 +5,7 @@ import SearchForm from './SearchForm';
 
 function Home() {
   const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(false);
   const searchMovies = async (title) => {
     const options = {
       method: 'GET',
@@ -16,13 +17,16 @@ function Home() {
     };
     let results = await axios.request(options);
     setMovies(results.data.titles);
-    console.log(results.data.titles, movies);
+    setLoading(false);
   };
 
   return (
     <div>
-      <SearchForm searchMovies={searchMovies} />
-      <MovieList movies={movies} />
+      <SearchForm searchMovies={searchMovies} setLoading={setLoading} />
+      {
+        loading ? <div>Loading...</div> :
+        <MovieList movies={movies} />
+      }
     </div>
   );
 }

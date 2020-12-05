@@ -4,15 +4,11 @@ import { useParams } from 'react-router-dom';
 import BackendApi from './api';
 
 function Movie() {
-  console.log("!")
   const [movieInfo, setMovieInfo] = useState();
   const [score, setScore] = useState(0);
   const [loading, setLoading] = useState(true);
+  
   let { id } = useParams();
-  console.log(typeof id)
-  // useEffect to fetch rest of movie data
-  // and fetch stored upvote/downvotes
-  // make new entry if it does not exist!
 
   useEffect(function () {
     const getMovieInfo = async () => {
@@ -28,13 +24,11 @@ function Movie() {
       let results = await axios.request(options);
       setMovieInfo(results.data);
       let movieScore = await BackendApi.getMovieScore(id);
-      
-      if (movieScore.status === undefined){
-        let newMovie = await BackendApi.addMovie(id);
-        console.log(newMovie);
-        movieScore = newMovie.data;
+
+      if (movieScore.data === "") {
+        await BackendApi.addMovie(id);
+        movieScore.data = { votes: 0 }
       };
-      console.log(movieScore)
       setScore(movieScore.data.votes);
       setLoading(false);
     }
@@ -62,12 +56,16 @@ function Movie() {
 
   return (
     <div>
-      {movieInfo.title} -
-      {movieInfo.year} -
-      {movieInfo.length} -
-      {score}
-      <button onClick={() => upVote(id)}>↑</button>
-      <button onClick={() => downVote(id)}>↓</button>
+      <div>{movieInfo.title}</div>
+      <div>{movieInfo.year}</div>
+      <div>{movieInfo.length}</div>
+      <div><img src={movieInfo.poster} height="400" width="300" /></div>
+      <div>User Score: {score}</div>
+      <div>
+        Vote!
+        <button onClick={() => upVote(id)}>↑</button>
+        <button onClick={() => downVote(id)}>↓</button>
+      </div>
     </div>
   )
 };

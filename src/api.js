@@ -23,7 +23,6 @@ class BackendApi {
 
   static async updateMovieScore(movieId, direction) {
     try {
-      console.log(movieId)
       const resp = await axios.post(`${BASE_URL}/movies/${movieId}/vote/${direction}`);
       return resp;
     } catch (err) {

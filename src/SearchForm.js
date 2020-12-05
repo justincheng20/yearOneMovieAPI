@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 
-function SearchForm({searchMovies}) {
+function SearchForm({searchMovies, setLoading}) {
   const [formData, setFormData] = useState({
     title: "",
   });
-  // const [message, setMessage] = useState(null);
 
   const handleChange = evt => {
     const { name, value } = evt.target;
@@ -16,6 +15,7 @@ function SearchForm({searchMovies}) {
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
+    setLoading(true);
     searchMovies(formData.title);
   };
 
