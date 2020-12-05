@@ -16,7 +16,7 @@ function Movie() {
         method: 'GET',
         url: `https://imdb-internet-movie-database-unofficial.p.rapidapi.com/film/${id}`,
         headers: {
-          'x-rapidapi-key': 'd122deae09mshd1e30a7aa0d5fcep1a6acfjsnbc4ae67cf9ff',
+          'x-rapidapi-key': process.env.REACT_APP_API_KEY,
           'x-rapidapi-host': 'imdb-internet-movie-database-unofficial.p.rapidapi.com'
         }
       };
