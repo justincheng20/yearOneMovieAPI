@@ -6,7 +6,7 @@ function MovieListItem({ movie }) {
     <div>
       <Link to={`/${movie.id}`}>
         {movie.title}
-        <img src={movie.image} width="50" height="80" />
+        <img src={movie.image} width="50" height="80" alt="movie poster"/>
       </Link>
     </div>
   )

@@ -7,7 +7,7 @@ function Movie() {
   const [movieInfo, setMovieInfo] = useState();
   const [score, setScore] = useState(0);
   const [loading, setLoading] = useState(true);
-  
+
   let { id } = useParams();
 
   useEffect(function () {
@@ -59,7 +59,12 @@ function Movie() {
       <div>{movieInfo.title}</div>
       <div>{movieInfo.year}</div>
       <div>{movieInfo.length}</div>
-      <div><img src={movieInfo.poster} height="400" width="300" /></div>
+      <div>
+        <img src={movieInfo.poster}
+          height="400"
+          width="300"
+          alt="movie poster" />
+      </div>
       <div>User Score: {score}</div>
       <div>
         Vote!
