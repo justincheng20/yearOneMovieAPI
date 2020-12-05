@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 
-app.use("/api/posts", moviesRoutes);
+app.use("/api/movies", moviesRoutes);
 
 
 /** 404 Not Found handler. */
