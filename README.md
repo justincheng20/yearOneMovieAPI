@@ -9,5 +9,5 @@ While you are in this folder:
 
 Images:
 
-![Search Page](Images/movie1.png)
-![Movie Detail Page](Images/movie2.png)
+![Search Page](movie1.png)
+![Movie Detail Page](movie2.png)
